@@ -4,11 +4,15 @@
   "description": "Typescript NodeJS Project",
   "main": "/src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "tsc -w"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.0.1"
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.4",
+    "express": "^5.0.1",
+    "typescript": "^5.7.3"
   }
 }
