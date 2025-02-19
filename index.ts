@@ -1,12 +1,23 @@
-//! This syntax will not work with npx as that way you are running tsc with default tsconfig options and that does not respect esModuleInterop which is set to true. THIS IS A MAJOR POINT OF DIFFERENCE AND CAUSE OF ERROR AND CONFUSION
-
-//! When you use TSC inside package.json the TypeScript version that exists inside your NodeJS modules using package.json is automatically pixked by npm
 import express, { Express, Request, Response } from "express";
+
+import { Page } from "./src/page";
+import { Post } from "./src/post";
+import { User } from "./src/user";
 
 const app: Express = express();
 const port = 3001;
 
 app.get("/", (req: Request, res: Response) => {
+  res.send("Express + TypeScript Server");
+});
+
+app.get("/create-post", (req: Request, res: Response) => {
+  let post = new Post("New Post", "Post Content", new User("John"));
+  res.send("Express + TypeScript Server");
+});
+
+app.get("/create-user", (req: Request, res: Response) => {
+  let page = new Page("New Post", new User("John"));
   res.send("Express + TypeScript Server");
 });
 
