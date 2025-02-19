@@ -13,12 +13,14 @@ app.get("/", (req: Request, res: Response) => {
 
 app.get("/create-post", (req: Request, res: Response) => {
   let post = new Post("New Post", "Post Content", new User("John"));
-  res.send("Express + TypeScript Server");
+  console.log(post);
+  res.send("Post Created");
 });
 
-app.get("/create-user", (req: Request, res: Response) => {
+app.get("/create-page", (req: Request, res: Response) => {
   let page = new Page("New Post", new User("John"));
-  res.send("Express + TypeScript Server");
+  console.log(page);
+  res.send("Page Created");
 });
 
 app.listen(port, () => {
