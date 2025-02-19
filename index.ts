@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 
+import { Container } from "inversify";
 import { Page } from "./src/page";
 import { Post } from "./src/post";
 import { User } from "./src/user";
