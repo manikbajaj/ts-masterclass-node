@@ -1,0 +1,14 @@
+{
+  "name": "ts-masterclass-node",
+  "version": "1.0.0",
+  "description": "Typescript NodeJS Project",
+  "main": "/src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.0.1"
+  }
+}
