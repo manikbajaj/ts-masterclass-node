@@ -9,6 +9,9 @@ const mongoose = require("mongoose");
 const app: Express = express();
 const port = 3001;
 
+// Process Incoming request body
+app.use(express.json());
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
