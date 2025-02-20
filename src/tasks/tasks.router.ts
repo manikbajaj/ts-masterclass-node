@@ -14,9 +14,20 @@ export class TasksRouter {
   }
 
   private initializeRoutes() {
+    this.router.get("/", (req: Request, res: Response) => {
+      const newTask = this.tasksController.handleGetTasks();
+      res.send(newTask).json();
+    });
+
     // Post Route
     this.router.post("/create", (req: Request, res: Response) => {
-      const newTask = this.tasksController.createTask();
+      const newTask = this.tasksController.handlePostTasks();
+      res.send(newTask).json();
+    });
+
+    // Patch Route
+    this.router.patch("/update", (req: Request, res: Response) => {
+      const newTask = this.tasksController.handlePatchTasks();
       res.send(newTask).json();
     });
   }
