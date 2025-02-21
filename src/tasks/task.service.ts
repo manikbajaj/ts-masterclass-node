@@ -8,7 +8,7 @@ export class TaskService {
   private taskModel: Model<ITask> = Task;
 
   public async createTask(taskData: ITask) {
-    return new this.taskModel(taskData).save();
+    return await new this.taskModel(taskData).save();
   }
 
   public async findById(_id: string) {
