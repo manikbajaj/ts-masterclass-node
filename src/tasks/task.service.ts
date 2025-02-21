@@ -1,4 +1,5 @@
 import { ITask } from "./task.interface";
+import { ITaskPagination } from "./interfaces/taskPagination.interface";
 import { Model } from "mongoose";
 import { Task } from "./task.schema";
 import { injectable } from "inversify";
@@ -15,7 +16,13 @@ export class TaskService {
     return await this.taskModel.findById(_id);
   }
 
-  public async findAll() {
-    return await this.taskModel.find();
+  public async findAll(pagination: ITaskPagination) {
+    return await this.taskModel
+      .find()
+      .limit(pagination.limit)
+      .skip(pagination.page)
+      .sort({
+        createdAt: pagination.order === "asc" ? 1 : -1,
+      });
   }
 }

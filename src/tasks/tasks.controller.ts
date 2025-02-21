@@ -7,18 +7,28 @@ import { TaskService } from "./task.service";
 import { UpdateTaskProvider } from "./providers/updateTask.provider";
 import { StatusCodes } from "http-status-codes";
 import { matchedData } from "express-validator";
+import { GetTasksProvider } from "./providers/getTasks.provider";
 
 @injectable()
 export class TasksController {
   constructor(
     @inject(UserController) private userController: UserController,
     @inject(TaskService) private taskService: TaskService,
-    @inject(UpdateTaskProvider) private UpdateTaskProvider: UpdateTaskProvider
+    @inject(UpdateTaskProvider) private updateTaskProvider: UpdateTaskProvider,
+    @inject(GetTasksProvider) private getTasksProvider: GetTasksProvider
   ) {}
 
-  public async handleGetTasks(req: Request, res: Response) {
-    const tasks: ITask[] = await this.taskService.findAll();
-    return tasks;
+  public async handleGetTasks(req: Request, res: Response): Promise<ITask[]> {
+    const validatedData = matchedData(req);
+
+    try {
+      const tasks: ITask[] = await this.getTasksProvider.findAllTasks(
+        validatedData
+      );
+      return tasks;
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 
   public async handlePostTasks(req: Request<{}, {}, ITask>, res: Response) {
@@ -34,7 +44,7 @@ export class TasksController {
     const validatedData: IPartialTaskWithId = matchedData(req);
 
     try {
-      return await this.UpdateTaskProvider.updateTask(validatedData);
+      return await this.updateTaskProvider.updateTask(validatedData);
     } catch (error: any) {
       throw new Error(error);
     }
