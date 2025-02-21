@@ -4,12 +4,15 @@ import { UserController } from "../user/user.controller";
 import { IPartialTaskWithId, ITask } from "./task.interface";
 import { Document } from "mongoose";
 import { TaskService } from "./task.service";
+import { UpdateTaskProvider } from "./providers/updateTask.provider";
+import { StatusCodes } from "http-status-codes";
 
 @injectable()
 export class TasksController {
   constructor(
     @inject(UserController) private userController: UserController,
-    @inject(TaskService) private taskService: TaskService
+    @inject(TaskService) private taskService: TaskService,
+    @inject(UpdateTaskProvider) private UpdateTaskProvider: UpdateTaskProvider
   ) {}
 
   public async handleGetTasks(req: Request, res: Response) {
@@ -26,23 +29,11 @@ export class TasksController {
   public async handlePatchTasks(
     req: Request<{}, {}, IPartialTaskWithId>,
     res: Response
-  ) {
-    const task = await this.taskService.findById(req.body["_id"]);
-
-    if (task) {
-      //  Update the task
-      task.title = req.body.title ? req.body.title : task.title;
-      task.description = req.body.description
-        ? req.body.description
-        : task.description;
-      task.dueDate = req.body.dueDate ? req.body.dueDate : task.dueDate;
-      task.priority = req.body.priority ? req.body.priority : task.priority;
-      task.status = req.body.status ? req.body.status : task.status;
-
-      // Save it
-      await task.save();
+  ): Promise<Document> {
+    try {
+      return await this.UpdateTaskProvider.updateTask(req.body._id, req.body);
+    } catch (error: any) {
+      throw new Error(error);
     }
-
-    return task;
   }
 }

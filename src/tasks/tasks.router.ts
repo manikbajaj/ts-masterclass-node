@@ -51,11 +51,8 @@ export class TasksRouter {
     this.router.patch(
       "/update",
       async (req: Request<{}, {}, IPartialTaskWithId>, res: Response) => {
-        const updatedTask = await this.tasksController.handlePatchTasks(
-          req,
-          res
-        );
-        res.json(updatedTask);
+        let updatedTask = await this.tasksController.handlePatchTasks(req, res);
+        res.status(StatusCodes.OK).json(updatedTask);
       }
     );
   }
