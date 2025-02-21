@@ -7,11 +7,6 @@ export const getTasksValidator = checkSchema({
     optional: true,
     isInt: true,
     toInt: true,
-    customSanitizer: {
-      options: (value) => {
-        return value || 10; // Default to 10 if not provided
-      },
-    },
   },
   page: {
     in: ["query"],
@@ -21,11 +16,6 @@ export const getTasksValidator = checkSchema({
       options: { min: 1 },
     },
     toInt: true,
-    customSanitizer: {
-      options: (value) => {
-        return value || 1; // Default to 1 if not provided
-      },
-    },
   },
   order: {
     in: ["query"],
@@ -33,11 +23,6 @@ export const getTasksValidator = checkSchema({
     optional: true,
     isIn: {
       options: [["asc", "dsc"]],
-    },
-    customSanitizer: {
-      options: (value) => {
-        return value || "asc"; // Default to 'asc' if not provided
-      },
     },
   },
 });
