@@ -8,11 +8,10 @@ export class UpdateTaskProvider {
   constructor(@inject(TaskService) private taskService: TaskService) {}
 
   public async updateTask(
-    taskId: string,
     update: IPartialTaskWithId
   ): Promise<Document | never> {
     const task: (Document & ITask) | null = await this.taskService.findById(
-      taskId
+      update._id
     );
 
     // Throw Error if task does not exist

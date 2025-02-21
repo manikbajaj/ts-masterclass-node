@@ -6,6 +6,7 @@ import { Document } from "mongoose";
 import { TaskService } from "./task.service";
 import { UpdateTaskProvider } from "./providers/updateTask.provider";
 import { StatusCodes } from "http-status-codes";
+import { matchedData } from "express-validator";
 
 @injectable()
 export class TasksController {
@@ -30,8 +31,10 @@ export class TasksController {
     req: Request<{}, {}, IPartialTaskWithId>,
     res: Response
   ): Promise<Document> {
+    const validatedData: IPartialTaskWithId = matchedData(req);
+
     try {
-      return await this.UpdateTaskProvider.updateTask(req.body._id, req.body);
+      return await this.UpdateTaskProvider.updateTask(validatedData);
     } catch (error: any) {
       throw new Error(error);
     }
