@@ -5,6 +5,7 @@ import { ITask, IPartialTaskWithId } from "./task.interface";
 import { createTaskValidator } from "./validators/createTask.validator";
 import { validationResult } from "express-validator";
 import { getTasksValidator } from "./validators/getTasks.validator";
+import { StatusCodes } from "http-status-codes";
 
 @injectable()
 export class TasksRouter {
@@ -39,9 +40,9 @@ export class TasksRouter {
         const result = validationResult(req);
         if (result.isEmpty()) {
           const newTask = await this.tasksController.handlePostTasks(req, res);
-          res.json(newTask);
+          res.status(StatusCodes.OK).json(newTask);
         } else {
-          res.json(result.array());
+          res.status(StatusCodes.BAD_REQUEST).json(result.array());
         }
       }
     );
