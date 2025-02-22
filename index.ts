@@ -3,14 +3,17 @@ import "reflect-metadata";
 import express, { Express, Request, Response } from "express";
 
 import { addRoutes } from "./src/config/routes.config";
-
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import { responseFormatter } from "./src/middleware/responseFormatter";
 
 const app: Express = express();
 const port = 3001;
 
 // Process Incoming request body
 app.use(express.json());
+
+// Use response formatter middleware
+app.use(responseFormatter);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
