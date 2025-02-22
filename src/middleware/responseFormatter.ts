@@ -7,6 +7,7 @@ interface IResponse {
   message: string;
   data?: any; // Updated to any to accommodate various types of data
   error?: any; // Updated to any to accommodate various types of error structures
+  meta?: any;
 }
 
 export function responseFormatter(
@@ -31,9 +32,15 @@ export function responseFormatter(
     };
 
     if (statusCode >= 200 && statusCode < 300) {
-      response.data = data;
-    } else {
+      response.data = data.meta ? data.data : data;
+    }
+
+    if (statusCode >= 300) {
       response.error = data;
+    }
+
+    if (data.meta) {
+      response.meta = data.meta;
     }
 
     // Call the original res.json function with the new response structure
