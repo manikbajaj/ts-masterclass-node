@@ -18,13 +18,15 @@ export class TasksController {
     @inject(GetTasksProvider) private getTasksProvider: GetTasksProvider
   ) {}
 
-  public async handleGetTasks(req: Request, res: Response): Promise<ITask[]> {
+  public async handleGetTasks(
+    req: Request,
+    res: Response
+  ): Promise<{ data: ITask[]; meta: {} }> {
     const validatedData = matchedData(req);
 
     try {
-      const tasks: ITask[] = await this.getTasksProvider.findAllTasks(
-        validatedData
-      );
+      const tasks: { data: ITask[]; meta: {} } =
+        await this.getTasksProvider.findAllTasks(validatedData);
       return tasks;
     } catch (error: any) {
       throw new Error(error);
